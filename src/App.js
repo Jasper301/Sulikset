@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import './App.css';
 import Header from './components/Header';
 import Search from './components/Search';
-
+import Jobs from './components/jobs';
+import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
+import Weather from './components/Weather';
 function App() {
   const initjobs = [
     {
@@ -21,20 +23,22 @@ function App() {
   const [jobs, setJobs] = useState(initjobs);
 
   fetch('http://gis.vantaa.fi/rest/tyopaikat/v1/kaikki')
-  .then(response => response.json())
-  .then(json=>setJobs([...json]));
+    .then(response => response.json())
+    .then(json => setJobs([...json]));
 
-
-
-  const rows = () => jobs.map(job => {
-  return <p><input type ="checkbox"></input> {job.tyotehtava}, {job.osoite}, <a href={job.linkki} >LISÄTIETOA</a></p>
-  })
   return (
-    <div className="App">
-      <Header />
-      <Search />
-      {rows()}
-    </div>
+    <Router>
+      <div className="App">
+        <Header />
+        <Route path="/weather">
+          <Weather />
+      </Route>
+      <Route path="/">
+        <Search />
+        <Jobs jobs={jobs} />
+        </Route>
+      </div>
+    </Router>
   );
 }
 
