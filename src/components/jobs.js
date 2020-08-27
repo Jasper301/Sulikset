@@ -1,9 +1,14 @@
 import React from 'react'
 import Job from './Job';
 
-function Jobs({ jobs }) {
+function Jobs({ jobs onCompleted }) {
+
+    const handleCompleted = (job) => {
+        onCompleted(job);
+    }
+
     const rows = () => jobs.map(job => {
-        return <Job job={job} key={job.id} />
+        return <Job onCompleted={handCompleted} job={job} key={job.id} />
         
     })
 
