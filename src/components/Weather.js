@@ -1,12 +1,40 @@
 import React from 'react'
-import { VictoryChart, VictoryLine } from 'victory'
+import { VictoryChart, VictoryLine, VictoryBar } from 'victory'
+
 
 function Weather() {
 
+    const data = [    
+        { quarter: "1.1", earnings: 60 },
+        { quarter: "2.1", earnings: 50 },
+        { quarter: "3.1", earnings: 30 },
+        { quarter: 4.1, earnings: 20 }
+    ];
+
+
     return (
+        <div>
+            <h1>ilmankosteus </h1>
+            
+
+            <VictoryChart
+            domainPadding={{ x: 50, y: 5  }}
+            width={700}
+            height={200}>
+                <VictoryBar
+                    data={data}
+                    x="quarter"
+                    y="earnings"
+                />
+            </VictoryChart>
+            
+
+
+        
+         <h1>Lämpötila </h1>
         <VictoryChart
             domainPadding={{ x: 30, y: 10 }}
-            width={1000}
+            width={1400}
             height={250}>
 
             <VictoryLine
@@ -24,10 +52,11 @@ function Weather() {
                 }}
                 x="experiment"
                 y="actual"
-             
-        />
-            
-            </VictoryChart>    
+
+            />
+
+        </VictoryChart>
+        </div>    
     )
 }
 

@@ -5,6 +5,8 @@ import Search from './components/Search';
 import Jobs from './components/jobs';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Weather from './components/Weather';
+
+
 function App() {
 
   const initJobs = []
