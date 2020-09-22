@@ -4,13 +4,16 @@ import { VictoryChart, VictoryLine, VictoryBar, VictoryTooltip, VictoryVoronoiCo
 
 
 function Weather() {
-
+  // hakee päivämäärän.
   const today = new Date();
+  // rakentaa päivämäärän muotoon: päivä.kuukausi.vuosi
   const date = today.getDate() + "." + parseInt(today.getMonth() + 1) + "." + today.getFullYear();
 
+  // hakee sään.
   const initWeather = [];
   const [weather, setWeather] = useState(initWeather);
 
+  // hakee kosetus/lämpötila taulukon.
   fetch('https://funcvariaiot.azurewebsites.net/api/HttpTriggerGetIotData?code=qO5qkShg0osHqY0BB2nfXI/anPgQ/K/3mIF7VTCFfaTdrvo6wl6DKw==&amount=50')
     .then(response => response.json())
     .then(json => setWeather([...json]));
@@ -26,11 +29,6 @@ function Weather() {
     return <div key={humtempkey++}><d>Pvm:</d> {measurementDate}, <b>klo:</b> {measurementTime}---------------<b>Ilmankosteus:</b> {temphum.Hum.split('.')[0]}%-------------<b>Lämpötila:</b> {temphum.Temp.split('.')[0]}°C</div>
   })
   const TempData = chartTempData;
-  //const TempData = [{ experiment: "1.1.", actual: -10 },
-  //{ experiment: "2.1.", actual: -5 },
-  //{ experiment: "3.1.", actual: 0 },
-  // { experiment: "4.1.", actual: 5 },
-  //{ experiment: "5.1.", actual: 5 }];
 
   const HumData = chartHumData;
 
@@ -64,10 +62,10 @@ function Weather() {
           }}
         />
       </VictoryChart>
-          
 
 
-          
+
+
       <h1>Lämpötila </h1>
       <VictoryChart
         domainPadding={{ x: 15, y: 50 }}
