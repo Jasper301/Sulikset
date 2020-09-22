@@ -64,10 +64,10 @@ function Weather() {
           }}
         />
       </VictoryChart>
+          
 
 
-
-
+          
       <h1>Lämpötila </h1>
       <VictoryChart
         domainPadding={{ x: 15, y: 50 }}
