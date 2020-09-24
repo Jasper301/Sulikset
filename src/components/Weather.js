@@ -22,7 +22,7 @@ function Weather() {
   let chartHumData = [];
 
   const rows = () => weather.slice(0, 23).reverse().map(temphum => {
-    // Poistaa ylimääräisiä merkintöjä.
+    // loop joka parseroi tietoja
     const measurementDate = temphum.PublishedAt.split('T')[0].split('-')[2] + '.' + temphum.PublishedAt.split('T')[0].split('-')[1] + '.' + temphum.PublishedAt.split('T')[0].split('-')[0]
     const measurementTime = temphum.PublishedAt.split('T')[1].split(':')[0] + ':' + temphum.PublishedAt.split('T')[1].split(':')[1]
     chartTempData.push({ x: String(measurementTime), y: parseInt(temphum.Temp) });
