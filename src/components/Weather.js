@@ -4,6 +4,12 @@ import { VictoryChart, VictoryBar, VictoryTooltip, VictoryVoronoiContainer, Vict
 
 
 function Weather() {
+ 
+ function convertUTCDateToLocalDate(date){
+   new Date(date.getTime()+date.getTimezoneOffset()*60*1000);
+   return date;
+ }
+ 
   // hakee päivämäärän.
   const today = new Date();
   // rakentaa päivämäärän muotoon: päivä.kuukausi.vuosi
@@ -24,11 +30,13 @@ function Weather() {
 
   const rows = () => weather.slice(0, 23).reverse().map(temphum => {
     // loop joka parseroi rajapinnasta saatuja tietoja victorychartin vaatimaan muotoon.
+    const fixedTime = String(convertUTCDateToLocalDate(new Date(temphum.PublishedAt)));
     const measurementDate = temphum.PublishedAt.split('T')[0].split('-')[2] + '.' + temphum.PublishedAt.split('T')[0].split('-')[1] + '.' + temphum.PublishedAt.split('T')[0].split('-')[0]
-    const measurementTime = temphum.PublishedAt.split('T')[1].split(':')[0] + ':' + temphum.PublishedAt.split('T')[1].split(':')[1]
-    chartTempData.push({ x: String(measurementTime), y: parseInt(temphum.Temp) });
-    chartHumData.push({ x: String(measurementTime), y: parseInt(temphum.Temp), label: String(temphum.Temp.split('.')[0] + "%") });
-    return <div key={humtempkey++}><d>Pvm:</d> {measurementDate}, <b>klo:</b> {measurementTime}---------------<b>Ilmankosteus:</b> {temphum.Hum.split('.')[0]}%-------------<b>Lämpötila:</b> {temphum.Temp.split('.')[0]}°C</div>
+    //const measurementTime = temphum.PublishedAt.split('T')[1].split(':')[0] + ':' + temphum.PublishedAt.split('T')[1].split(':')[1]
+    const time = fixedTime.split(' ')[4].split(':')[0] + ":" + fixedTime.split(' ')[4].split(':')[1]
+    chartTempData.push({ x: String(time), y: parseInt(temphum.Temp) });
+    chartHumData.push({ x: String(time), y: parseInt(temphum.Temp), label: String(temphum.Temp.split('.')[0] + "%") });
+    return <div key={humtempkey++}><b>Pvm:</b> {measurementDate}, <b>klo:</b> {time}---------------<b>Ilmankosteus:</b> {temphum.Hum.split('.')[0]}%-------------<b>Lämpötila:</b> {temphum.Temp.split('.')[0]}°C</div>
   })
   // Lämpötila data victorychartin vaatimassa muodossa
   const TempData = chartTempData;
@@ -56,7 +64,7 @@ function Weather() {
       <VictoryChart
         //Ilmankosteus taulukon koko.
         domainPadding={{ x: 15, y: 50 }}
-        // Ilmankosteus palkkien leveys.
+        // Ilmankosteus taulukon leveys.
         width={1400}
         //Ilmankosteus palkkien korkeus.
         height={350}>
@@ -76,7 +84,7 @@ function Weather() {
       <VictoryChart
         // Läpmpötila taulukon koko.
         domainPadding={{ x: 15, y: 50 }}
-        // Lämpötila pisteiden leveys.
+        // Lämpötila taulukon leveys.
         width={1400}
         // Lämpötila pisteiden korkeus.
         height={350}
