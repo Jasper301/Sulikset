@@ -40,7 +40,7 @@ function App() {
     : jobs.filter(job => job.tyotehtava.toUpperCase().includes(filterText.toUpperCase()))
 
   useEffect(() => {
-    fetch('http://gis.vantaa.fi/rest/tyopaikat/v1/kaikki')
+    fetch('https://gis.vantaa.fi/rest/tyopaikat/v1/kaikki')
       .then(response => response.json())
       .then(json => setJobs([...json]));
   }, []);

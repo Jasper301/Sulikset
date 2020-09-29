@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { VictoryChart, VictoryLine, VictoryBar, VictoryTooltip, VictoryVoronoiContainer, VictoryScatter, VictoryGroup, } from 'victory'
+import { VictoryChart, VictoryBar, VictoryTooltip, VictoryVoronoiContainer, VictoryScatter, VictoryGroup, } from 'victory'
 
 
 
@@ -9,29 +9,30 @@ function Weather() {
   // rakentaa päivämäärän muotoon: päivä.kuukausi.vuosi
   const date = today.getDate() + "." + parseInt(today.getMonth() + 1) + "." + today.getFullYear();
 
-  // hakee sään.
+  // asettaa säätietojen tilan.
   const initWeather = [];
   const [weather, setWeather] = useState(initWeather);
 
-  // hakee kosteus/lämpötila taulukon.
+  // hakee kosteus/lämpötila datanjason muodossa REST API rajapinnasta.
   fetch('https://funcvariaiot.azurewebsites.net/api/HttpTriggerGetIotData?code=qO5qkShg0osHqY0BB2nfXI/anPgQ/K/3mIF7VTCFfaTdrvo6wl6DKw==&amount=50')
     .then(response => response.json())
     .then(json => setWeather([...json]));
+
   let humtempkey = 1;
   let chartTempData = [];
   let chartHumData = [];
 
   const rows = () => weather.slice(0, 23).reverse().map(temphum => {
-    // loop joka parseroi tietoja
+    // loop joka parseroi rajapinnasta saatuja tietoja victorychartin vaatimaan muotoon.
     const measurementDate = temphum.PublishedAt.split('T')[0].split('-')[2] + '.' + temphum.PublishedAt.split('T')[0].split('-')[1] + '.' + temphum.PublishedAt.split('T')[0].split('-')[0]
     const measurementTime = temphum.PublishedAt.split('T')[1].split(':')[0] + ':' + temphum.PublishedAt.split('T')[1].split(':')[1]
     chartTempData.push({ x: String(measurementTime), y: parseInt(temphum.Temp) });
     chartHumData.push({ x: String(measurementTime), y: parseInt(temphum.Temp), label: String(temphum.Temp.split('.')[0] + "%") });
     return <div key={humtempkey++}><d>Pvm:</d> {measurementDate}, <b>klo:</b> {measurementTime}---------------<b>Ilmankosteus:</b> {temphum.Hum.split('.')[0]}%-------------<b>Lämpötila:</b> {temphum.Temp.split('.')[0]}°C</div>
   })
-  // Lämpötila taulukko
+  // Lämpötila data victorychartin vaatimassa muodossa
   const TempData = chartTempData;
-  // Kosteus taulukko
+  // Kosteus data victorychartin vaatimassa muodossa.
   const HumData = chartHumData;
 
   return (
@@ -53,7 +54,7 @@ function Weather() {
 
 
       <VictoryChart
-      //Ilmankosteus taulukon koko.
+        //Ilmankosteus taulukon koko.
         domainPadding={{ x: 15, y: 50 }}
         // Ilmankosteus palkkien leveys.
         width={1400}
@@ -73,7 +74,7 @@ function Weather() {
 
       <h1>Lämpötila </h1>
       <VictoryChart
-      // Läpmpötila taulukon koko.
+        // Läpmpötila taulukon koko.
         domainPadding={{ x: 15, y: 50 }}
         // Lämpötila pisteiden leveys.
         width={1400}
