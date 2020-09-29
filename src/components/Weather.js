@@ -4,12 +4,12 @@ import { VictoryChart, VictoryBar, VictoryTooltip, VictoryVoronoiContainer, Vict
 
 
 function Weather() {
- 
- function convertUTCDateToLocalDate(date){
-   new Date(date.getTime()+date.getTimezoneOffset()*60*1000);
-   return date;
- }
- 
+
+  function convertUTCDateToLocalDate(date) {
+    new Date(date.getTime() + date.getTimezoneOffset() * 60 * 1000);
+    return date;
+  }
+
   // hakee päivämäärän.
   const today = new Date();
   // rakentaa päivämäärän muotoon: päivä.kuukausi.vuosi
@@ -32,7 +32,7 @@ function Weather() {
     // loop joka parseroi rajapinnasta saatuja tietoja victorychartin vaatimaan muotoon.
     const fixedTime = String(convertUTCDateToLocalDate(new Date(temphum.PublishedAt)));
     const measurementDate = temphum.PublishedAt.split('T')[0].split('-')[2] + '.' + temphum.PublishedAt.split('T')[0].split('-')[1] + '.' + temphum.PublishedAt.split('T')[0].split('-')[0]
-    //const measurementTime = temphum.PublishedAt.split('T')[1].split(':')[0] + ':' + temphum.PublishedAt.split('T')[1].split(':')[1]
+
     const time = fixedTime.split(' ')[4].split(':')[0] + ":" + fixedTime.split(' ')[4].split(':')[1]
     chartTempData.push({ x: String(time), y: parseInt(temphum.Temp) });
     chartHumData.push({ x: String(time), y: parseInt(temphum.Temp), label: String(temphum.Temp.split('.')[0] + "%") });
@@ -62,7 +62,7 @@ function Weather() {
 
 
       <VictoryChart
-        //Ilmankosteus taulukon koko.
+        //Ilmankosteus taulukon elementtien välitila.
         domainPadding={{ x: 15, y: 50 }}
         // Ilmankosteus taulukon leveys.
         width={1400}
@@ -82,7 +82,7 @@ function Weather() {
 
       <h1>Lämpötila </h1>
       <VictoryChart
-        // Läpmpötila taulukon koko.
+        // Läpmpötila taulukon elemettien välitila.
         domainPadding={{ x: 15, y: 50 }}
         // Lämpötila taulukon leveys.
         width={1400}
