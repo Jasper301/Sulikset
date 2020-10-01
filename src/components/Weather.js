@@ -20,7 +20,7 @@ function Weather() {
   const [weather, setWeather] = useState(initWeather);
 
   // hakee kosteus/lämpötila datanjason muodossa REST API rajapinnasta.
-  fetch('https://funcvariaiot.azurewebsites.net/api/HttpTriggerGetIotData?code=qO5qkShg0osHqY0BB2nfXI/anPgQ/K/3mIF7VTCFfaTdrvo6wl6DKw==&amount=50')
+  fetch('https://funcvariaiot.azurewebsites.net/api/HttpTriggerGetIotData?code=qO5qkShg0osHqY0BB2nfXI/anPgQ/K/3mIF7VTCFfaTdrvo6wl6DKw==&amount=24')
     .then(response => response.json())
     .then(json => setWeather([...json]));
 
